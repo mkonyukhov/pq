@@ -193,7 +193,7 @@ inline void myPQueue<Type, Compare>::swap(myPQueue &r)
 {
 	myPQueue t(r);
 	r = *this;
-	*this = t;	 
+	*this = t;
 }
 
 template<class Type, class Compare>

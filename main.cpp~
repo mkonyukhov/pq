@@ -36,6 +36,7 @@ int main()
 		if(ig != ig_) cout << "ig!=ig_\n";
 		ig.print();
 		if(ig < ig_) cout << "ig<ig_\n";
+		if(ig_ > ig) cout << "ig_>ig\n";
 	}
 	catch(UnderflowException) 
 		{ cout << "Error: priority queue is empty\n"; }
