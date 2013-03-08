@@ -1,6 +1,6 @@
 #include <vector>
 #include <iostream>
-#include "pq.h"
+#include "pq.hpp"
 
 using namespace std;
 

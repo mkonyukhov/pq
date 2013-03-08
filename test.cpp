@@ -1,6 +1,6 @@
 #include <cstring>
 #include <iostream>
-#include "pq.h"
+#include "pq.hpp"
 #include <queue>
 
 using namespace std;

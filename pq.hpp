@@ -1,5 +1,5 @@
-#ifndef PQ_H
-#define PQ_H
+#ifndef PQ_HPP
+#define PQ_HPP
 
 #include <iostream>
 #include <vector>
@@ -450,4 +450,4 @@ bool myPQueue<Type, Compare>::iterator::operator!=(const myPQueue<Type, Compare>
     return ((ptr != r.ptr) || (pos != r.pos));
 }
 
-#endif /* PQ_H */
+#endif /* PQ_HP */
