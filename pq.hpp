@@ -18,9 +18,9 @@ public:
 	~myPQueue();
 
 	class iterator;
-    friend class iterator;
-    class reverse_iterator;
-    friend class reverse_iterator;
+	friend class iterator;
+	class reverse_iterator;
+	friend class reverse_iterator;
 
 	iterator begin();
 	iterator end();
@@ -50,16 +50,16 @@ public:
 	{
 	public:
 		iterator(myPQueue<Type, Compare> *a = 0, bool end = false);
-       	Type& operator*();
-       	iterator operator++();
-       	iterator operator++(int);
-       	iterator operator--();
-       	iterator operator--(int);
-       	bool operator ==(const iterator &r);
-       	bool operator !=(const iterator &r);
-    protected:
-       	int pos;
-       	myPQueue<Type, Compare> *ptr;
+	       	Type& operator*();
+       		iterator operator++();
+       		iterator operator++(int);
+       		iterator operator--();
+       		iterator operator--(int);
+       		bool operator ==(const iterator &r);
+		bool operator !=(const iterator &r);
+	protected:
+		int pos;
+		myPQueue<Type, Compare> *ptr;
 	};
 	
 	class reverse_iterator: public iterator
@@ -450,4 +450,4 @@ bool myPQueue<Type, Compare>::iterator::operator!=(const myPQueue<Type, Compare>
     return ((ptr != r.ptr) || (pos != r.pos));
 }
 
-#endif /* PQ_HP */
+#endif /* PQ_HPP */
