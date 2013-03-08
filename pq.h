@@ -136,19 +136,19 @@ template < class Type, class Compare >
 }
 
 template < class Type, class Compare >
-  inline int myPQueue < Type, Compare >::size () const const
+  inline int myPQueue < Type, Compare >::size () const
 {
   return actSize;
 }
 
 template < class Type, class Compare >
-  inline int myPQueue < Type, Compare >::capacity () const const
+  inline int myPQueue < Type, Compare >::capacity () const
 {
   return maxSize;
 }
 
 template < class Type, class Compare >
-  inline bool myPQueue < Type, Compare >::empty () constconst
+  inline bool myPQueue < Type, Compare >::empty () const
 {
   return !(bool) actSize;
 }
@@ -200,7 +200,7 @@ template < class Type, class Compare >
 }
 
 template < class Type, class Compare >
-  inline void myPQueue < Type, Compare >::print () const const
+  inline void myPQueue < Type, Compare >::print () const
 {
   cout << "_________________________\n";
   for (int i = 1; i <= actSize; i++)
@@ -221,7 +221,7 @@ template < class Type, class Compare >
 }
 
 template < class Type, class Compare >
-  inline const Type & myPQueue < Type, Compare >::top () const const
+  inline const Type & myPQueue < Type, Compare >::top () const
 {
   if (empty ())
     throw UnderflowException ();
@@ -469,7 +469,7 @@ template < class Type, class Compare > inline const
   Type &
   myPQueue <
   Type,
-Compare >::const_iterator::operator* () const const
+Compare >::const_iterator::operator* () const
 {
   return myPQueue < Type, Compare >::iterator::ptr->heap[myPQueue < Type,
 							 Compare >::iterator::
@@ -491,7 +491,7 @@ template < class Type, class Compare > inline const
   Type &
   myPQueue <
   Type,
-Compare >::const_reverse_iterator::operator* () const const
+Compare >::const_reverse_iterator::operator* () const
 {
   return myPQueue < Type, Compare >::iterator::ptr->heap[myPQueue < Type,
 							 Compare >::iterator::
