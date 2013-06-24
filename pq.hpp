@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 
-class UnderflowException{};
+class UnderflowException {};
 
 template <class Type, class Compare>
 class priority_queue
