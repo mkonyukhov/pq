@@ -8,9 +8,9 @@ int main()
 
 		std::vector<double> vd(44, 3.14);
 		
-		priority_queue<double, std::greater<double>> dg(vd, 2);
+		priority_queue<double, std::greater<double>> qd(vd, 2);
 		
-		for (auto i : dg) {
+		for (auto i : qd) {
 		    std::cout << i << std::endl; 
 		}
 	} catch(UnderflowException) {

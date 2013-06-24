@@ -26,7 +26,7 @@ public:
 	reverse_iterator rend();
 
 	int size() const;
-	int capacity() const;
+	size_t capacity() const;
 	bool empty() const;
 	void makeEmpty();
 	void push(const Type &item);

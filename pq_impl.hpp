@@ -43,8 +43,10 @@ int priority_queue<Type, Compare>::size() const
     { return actSize; }
 
 template<class Type, class Compare>
-int priority_queue<Type, Compare>::capacity() const
-    { return maxSize; }
+inline size_t priority_queue<Type, Compare>::capacity() const
+{
+    return maxSize;
+}
 
 template<class Type, class Compare>
 bool priority_queue<Type, Compare>::empty() const
@@ -52,23 +54,33 @@ bool priority_queue<Type, Compare>::empty() const
 
 template<class Type, class Compare>
 void priority_queue<Type, Compare>::makeEmpty()
-    { actSize = 0; }
+{
+    actSize = 0;
+}
 
 template<class Type, class Compare>
 void priority_queue<Type, Compare>::push(const Type &item)
 {
     heap[0] = item;
     
-    if(actSize + 1 == maxSize)
-    {
+    if (actSize + 1 == maxSize) {
         Type *tmp = new Type[maxSize *= 2];
-        for(size_t i = 0; i <= actSize; ++i) tmp[i] = heap[i];
+        
+        for(size_t i = 0; i <= actSize; ++i) {
+            tmp[i] = heap[i];
+        }
+        
         delete[] heap;
+        
         heap = tmp;
     }
     
-    int hole = ++actSize;
-    for(; lessThan(item, heap[hole / 2]); hole /= 2) heap[hole] = heap[hole / 2];
+    size_t hole = ++actSize;
+    
+    for(; lessThan(item, heap[hole / 2]); hole /= 2) {
+        heap[hole] = heap[hole / 2];
+    }
+    
     heap[hole] = item;
 }
 
@@ -205,13 +217,22 @@ bool priority_queue<Type, Compare>::operator!=(const priority_queue<Type, Compar
 }
 
 template<class Type, class Compare>
-bool priority_queue<Type, Compare>::operator<(const priority_queue<Type, Compare> &r)
+bool priority_queue<Type, Compare>::operator<(const priority_queue<Type, Compare> &rhs)
 {
-    if(*this == r) return false;
-    if(size() < r.size()) return true;
-    if(size() > r.size()) return false;
+    if (*this == rhs || size() > rhs.size()) {
+        return false;
+    }
     
-    for(size_t i = 1; i <=actSize; ++i) if(heap[i] < r.heap[i]) return true;
+    if (size() < rhs.size()) {
+        return true;
+    }
+    
+    for (size_t i = 1; i <=actSize; ++i) {
+        if(heap[i] < rhs.heap[i]) {
+            return true;
+        }
+    }
+    
     return false;
 }
 
@@ -236,7 +257,7 @@ priority_queue<Type, Compare> &priority_queue<Type, Compare>::operator= \
         
         actSize = rhs.actSize;
         
-        for(size_t i = 0; i <= actSize; i++) {
+        for(size_t i = 1; i <= actSize; i++) {
             heap[i] = rhs.heap[i];
         }
     }
@@ -262,7 +283,8 @@ Type& priority_queue<Type, Compare>::iterator::operator*()
 }
 
 template<class Type, class Compare>
-typename priority_queue<Type, Compare>::iterator priority_queue<Type, Compare>::iterator::operator++()
+typename priority_queue<Type, Compare>::iterator \
+    priority_queue<Type, Compare>::iterator::operator++()
 {
     pos++;
     return *this;
@@ -284,10 +306,12 @@ typename priority_queue<Type, Compare>::iterator priority_queue<Type, Compare>::
 }
 
 template<class Type, class Compare>
-typename priority_queue<Type, Compare>::iterator priority_queue<Type, Compare>::iterator::operator--(int)
+typename priority_queue<Type, Compare>::iterator \
+    priority_queue<Type, Compare>::iterator::operator--(int)
 {
     priority_queue<Type, Compare>::iterator t = *this;
     pos--;
+    
     return t;
 }
 
@@ -325,10 +349,12 @@ typename priority_queue<Type, Compare>::reverse_iterator \
 }
 
 template<class Type, class Compare>
-typename priority_queue<Type, Compare>::reverse_iterator priority_queue<Type, Compare>::reverse_iterator::operator--(int)
+typename priority_queue<Type, Compare>::reverse_iterator \
+    priority_queue<Type, Compare>::reverse_iterator::operator--(int)
 {
     priority_queue<Type, Compare>::reverse_iterator t = *this;
     priority_queue<Type, Compare>::iterator::pos++;
+    
     return t;
 }
 
@@ -365,8 +391,12 @@ priority_queue<Type, Compare>::const_reverse_iterator::const_reverse_iterator(co
     : priority_queue<Type, Compare>::reverse_iterator(r) {}
 
 template<class Type, class Compare>
-const Type& priority_queue<Type, Compare>::const_reverse_iterator::operator*() const
-{ return priority_queue<Type, Compare>::iterator::ptr->heap[priority_queue<Type, Compare>::iterator::pos]; }
+const Type& priority_queue<Type, Compare>::const_reverse_iterator::operator* \
+    () const
+{
+    typedef priority_queue<Type, Compare>::iterator iter;
+    return iter::ptr->heap[iter::pos];
+}
 
 template<class Type, class Compare>
 void priority_queue<Type, Compare>::pop(iterator &begin, iterator &end)
@@ -404,7 +434,8 @@ bool priority_queue<Type, Compare>::iterator::operator==(const priority_queue<Ty
 }
 
 template <class Type, class Compare>
-bool priority_queue<Type, Compare>::iterator::operator!=(const priority_queue<Type, Compare>::iterator &r)
+inline bool priority_queue<Type, Compare>::iterator::operator!= \
+    (const priority_queue<Type, Compare>::iterator &r)
 {
     return ((ptr != r.ptr) || (pos != r.pos));
 }
