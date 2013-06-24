@@ -19,13 +19,18 @@ priority_queue<Type, Compare>::priority_queue(const priority_queue &r)
 }
 
 template<class Type, class Compare>
-priority_queue<Type, Compare>::priority_queue(const std::vector<Type> &v, int num)
-    : lessThan(Compare())
+priority_queue<Type, Compare>::priority_queue(const std::vector<Type> &v,
+    int num) : lessThan(Compare())
 {
     num < 0 ? actSize = v.size() : actSize = num;
     num < 0 ? maxSize = 2 * v.size() + 1 : maxSize = 2 * num + 1; 
+    
     heap = new Type[maxSize];
-    for(int i = 0; i < actSize; ++i) heap[i+1] = v[i];
+    
+    for(size_t i = 0; i < actSize; ++i) {
+        heap[i+1] = v[i];
+    }
+    
     buildHeap();
 }
 
@@ -88,10 +93,15 @@ template<class Type, class Compare>
 void priority_queue<Type, Compare>::print() const
 {
     std::cout << "_________________________\n";
+    
     for(size_t i = 1; i <= actSize; i++) {
         std::cout << heap[i] << '\t';
-        if (((i+1) & i) == 0) std::cout << '\n';
+        
+        if (((i+1) & i) == 0) {
+            std::cout << '\n';
+        }
     }
+    
     std::cout << "\n_________________________\n";
 }
 
