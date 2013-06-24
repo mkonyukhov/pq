@@ -7,17 +7,17 @@ using namespace std;
 int main()
 {
 	try {
-		myPQueue<double, greater<double> > dg;
+		priority_queue<double, greater<double> > dg;
 		vector<double> vd(44, 3.14);
 		dg.push(vd, 4);
-		myPQueue<double, greater<double> >::reverse_iterator CRI = dg.rbegin();
+		priority_queue<double, greater<double> >::reverse_iterator CRI = dg.rbegin();
 		while(CRI != dg.rend())
 		{
 			cout << *CRI << ' ';
 			++CRI;
 		}
 		cout << '\n';
-		myPQueue<int, greater<int> > ig;
+		priority_queue<int, greater<int> > ig;
 		vector<int> vi;
 		for(unsigned int i = 0; i < 21; i++) vi.push_back(i);
 		ig.push(vi);
@@ -28,7 +28,7 @@ int main()
 		cout<<'\n';
 		ig.print();
 		cout << dg.size() << ' ' << dg.capacity() << ' ' << ig.empty() << endl;
-		myPQueue<int, greater<int> > ig_ = ig;
+		priority_queue<int, greater<int> > ig_ = ig;
 		if(ig == ig_) cout << "ig==ig_\n";
 		int elem;
 		ig.pop(elem);
