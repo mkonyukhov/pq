@@ -13,9 +13,7 @@ int main()
 		for (auto i : dg) {
 		    std::cout << i << std::endl; 
 		}
-	}
-	
-	catch(UnderflowException) {
+	} catch(UnderflowException) {
 	    std::cout << "Error: priority queue is empty\n";
 	}
 		

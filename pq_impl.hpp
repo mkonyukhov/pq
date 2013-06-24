@@ -22,12 +22,12 @@ template<class Type, class Compare>
 priority_queue<Type, Compare>::priority_queue(const std::vector<Type> &v,
     int num) : lessThan(Compare())
 {
-    num < 0 ? actSize = v.size() : actSize = num;
-    num < 0 ? maxSize = 2 * v.size() + 1 : maxSize = 2 * num + 1; 
+    actSize = (num < 0) ? v.size() : num;
+    maxSize = (num < 0) ? 2 * v.size() + 1 : 2 * num + 1; 
     
     heap = new Type[maxSize];
     
-    for(size_t i = 0; i < actSize; ++i) {
+    for (size_t i = 0; i < actSize; ++i) {
         heap[i+1] = v[i];
     }
     
@@ -75,17 +75,26 @@ void priority_queue<Type, Compare>::push(const Type &item)
 template<class Type, class Compare>
 void priority_queue<Type, Compare>::push(const std::vector<Type> &v, int num)
 {
-    int cur = actSize;
-    num < 0 ? actSize += v.size() : actSize += num;
-    if(actSize + 1 >= maxSize)
-    {
+    size_t cur = actSize;
+    
+    actSize += (num < 0) ? v.size() : num;
+    
+    if (actSize + 1 >= maxSize) {
         Type *tmp = new Type[maxSize += 2 * actSize];
-        for(size_t i = 0; i <= actSize; ++i) tmp[i] = heap[i];
+        
+        for(size_t i = 0; i <= actSize; ++i) {
+            tmp[i] = heap[i];
+        }
+        
         delete[] heap;
+        
         heap = tmp;
     }
     
-    for(size_t i = cur; i < actSize; ++i) heap[i+1] = v[i];
+    for (size_t i = cur; i < actSize; ++i) {
+        heap[i+1] = v[i];
+    }
+    
     buildHeap();
 }
 
@@ -146,8 +155,12 @@ void priority_queue<Type, Compare>::percolateDown(size_t hole)
 template<class Type, class Compare>
 void priority_queue<Type, Compare>::pop()
 {
-    if(empty()) throw UnderflowException();
+    if(empty()) {
+        throw UnderflowException();
+    }
+    
     heap[1] = heap[actSize--];
+    
     percolateDown(1);
 }
 
@@ -214,15 +227,20 @@ bool priority_queue<Type, Compare>::operator>(const priority_queue<Type, Compare
 }
 
 template<class Type, class Compare>
-priority_queue<Type, Compare> &priority_queue<Type, Compare>::operator=(const priority_queue &r)
-{
-    if (this != &r)
-    {
+priority_queue<Type, Compare> &priority_queue<Type, Compare>::operator= \
+    (const priority_queue &rhs) {
+    if (this != &rhs) {
         delete[] heap;
-        heap = new Type [maxSize = r.maxSize];
-        actSize = r.actSize;
-        for(int i = 0; i <= actSize; i++) heap[i] = r.heap[i];
+        
+        heap = new Type[maxSize = rhs.maxSize];
+        
+        actSize = rhs.actSize;
+        
+        for(size_t i = 0; i <= actSize; i++) {
+            heap[i] = rhs.heap[i];
+        }
     }
+    
     return *this;
 }
 
@@ -299,7 +317,8 @@ typename priority_queue<Type, Compare>::reverse_iterator priority_queue<Type, Co
 }
     
 template<class Type, class Compare>
-typename priority_queue<Type, Compare>::reverse_iterator priority_queue<Type, Compare>::reverse_iterator::operator--()
+typename priority_queue<Type, Compare>::reverse_iterator \
+    priority_queue<Type, Compare>::reverse_iterator::operator--()
 {
     priority_queue<Type, Compare>::iterator::pos++;
     return *this;
@@ -332,11 +351,13 @@ priority_queue<Type, Compare>::const_iterator::const_iterator(const iterator &r)
 template<class Type, class Compare>
 const Type& priority_queue<Type, Compare>::const_iterator::operator*() const
 {
-    return priority_queue<Type, Compare>::iterator::ptr->heap[priority_queue<Type, Compare>::iterator::pos];
+    return priority_queue<Type, Compare>::iterator::ptr-> \
+        heap[priority_queue<Type, Compare>::iterator::pos];
 }
 
 template<class Type, class Compare>
-priority_queue<Type, Compare>::const_reverse_iterator::const_reverse_iterator(priority_queue<Type, Compare> *a, bool end)
+priority_queue<Type, Compare>::const_reverse_iterator::const_reverse_iterator \
+    (priority_queue<Type, Compare> *a, bool end)
     : priority_queue<Type, Compare>::reverse_iterator(a, end) {}
 
 template<class Type, class Compare>    
@@ -350,7 +371,7 @@ const Type& priority_queue<Type, Compare>::const_reverse_iterator::operator*() c
 template<class Type, class Compare>
 void priority_queue<Type, Compare>::pop(iterator &begin, iterator &end)
 {
-    while(begin != end--)  {
+    while (begin != end--)  {
         *end = heap[actSize--];
     }
     
